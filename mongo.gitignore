@@ -1,0 +1,15 @@
+bsondump
+mongod		
+mongoimport
+mongos
+data/
+mongodump
+mongooplog
+mongosniff
+mongoexport
+mongoperf
+mongostat
+mongo
+mongofiles
+mongorestore
+mongotop

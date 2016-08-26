@@ -13,3 +13,4 @@ MongoDB/bin/mongo
 MongoDB/bin/mongofiles
 MongoDB/bin/mongorestore
 MongoDB/bin/mongotop
+node_modules

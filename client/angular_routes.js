@@ -1,10 +1,10 @@
-var myApp = angular.module('openstory_server', ['ngRoute']);
+var myApp = angular.module('openstory_server', ['ngRoute', 'ngMaterial']);
 
 myApp.config(function ($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'partials/home.html',
-      access: {restricted: true}
+      access: {restricted: false}
     })
     .when('/login', {
       templateUrl: 'partials/login.html',
@@ -20,18 +20,41 @@ myApp.config(function ($routeProvider) {
       controller: 'registerController',
       access: {restricted: false}
     })
-    .when('/one', {
-      template: '<h1>This is page one!</h1>',
+    .when('/write_catalog/:c1', {
+      templateUrl: 'partials/write_catalog.html',
+      controller: 'catalogController',
       access: {restricted: true}
     })
+    .when('/search_catalogs', {
+      templateUrl: 'partials/search_catalogs.html',
+      controller: 'searchCatalogController',
+      access: {restricted: false}
+    })    
+    .when('/search_mycatalogs', {
+      templateUrl: 'partials/search_mycatalogs.html',
+      controller: 'searchCatalogController',
+      access: {restricted: true}
+    })
+    .when('/detail_catalog/:search', {
+      templateUrl: 'partials/detail_catalog.html',
+      controller: 'catalogController',
+      access: {restricted: true}
+    })        
     .when('/two', {
       template: '<h1>This is page two!</h1>',
       access: {restricted: false}
     })
     .otherwise({
-      redirectTo: '/'
+      redirectTo: '/',
+      access: {restricted: false}
     });
 });
+
+/*
+myApp.config(function($mdIconProvider) {
+    $mdIconProvider
+      .defaultIconSet('img/icons/sets/core-icons.svg', 24);
+});*/
 
 myApp.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',

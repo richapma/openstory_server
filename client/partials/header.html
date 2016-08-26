@@ -1,0 +1,61 @@
+<div layout="column" ng-cloak>
+    <md-button ng-click="toggleLeft()"
+      ng-hide="isOpenLeft()"
+      class="md-primary">
+      Toggle right
+    </md-button>
+    <section layout="row" flex>
+      <md-sidenav class="md-sidenav-left md-whiteframe-4dp" style="max-width: 220px;" md-component-id="left">
+        <md-toolbar class="md-theme-light">
+          <h1 class="md-toolbar-tools">Adventure Mashup</h1>
+        </md-toolbar>      
+        <md-content layout-padding>
+          <div flex style="max-height:45px;">
+            <md-button ng-click="$root.$location.path('/search_catalogs');toggleLeft();" class="md-primary" style="text-align:left;">
+                All Stories
+            </md-button>
+          </div>
+          <div flex style="max-height:45px;">
+            <md-button ng-click="toggleLeft()" class="md-primary" style="text-align:left">
+                Downloaded
+            </md-button>
+          </div>                
+          <div flex style="max-height:45px;">
+            <md-button ng-click="toggleLeft()" class="md-primary" style="text-align:left">
+                My Stories
+            </md-button>
+          </div>
+          <div flex style="max-height:45px;">
+            <md-button ng-click="$root.$location.path('/write_catalog/null');toggleLeft();" class="md-primary" style="text-align:left">
+                New Story
+            </md-button>
+          </div>
+          <div flex style="max-height:45px;">
+            <md-button ng-click="toggleLeft()" class="md-primary" style="text-align:left">
+                FAQ
+            </md-button>
+          </div>
+          <div flex style="max-height:45px;">
+            <md-button ng-click="toggleLeft()" class="md-primary" style="text-align:left">
+                Tutorial
+            </md-button>
+          </div>                 
+          <div ng-if="$root.isAuth == null || $root.isAuth == false"  flex style="max-height:45px;">
+            <md-button ng-click="$root.$location.path('/login');toggleLeft();" class="md-primary" style="text-align:left">
+                Sign In
+            </md-button>
+          </div>     
+          <div ng-if="$root.isAuth == true" flex style="max-height:45px;"> <!-- Make this a conditional so only displayed when logged in-->
+            <md-button ng-click="logout();toggleLeft();" class="md-primary" style="text-align:left">
+                Sign Out
+            </md-button>
+          </div>
+          <div flex style="max-height:45px;">
+            <md-button ng-click="toggleLeft()" class="md-primary" style="text-align:left">
+                Close
+            </md-button>
+          </div>                     
+        </md-content>
+      </md-sidenav>
+    </section>  
+</div>

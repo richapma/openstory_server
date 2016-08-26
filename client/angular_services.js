@@ -1,19 +1,14 @@
 angular.module('openstory_server').factory('AuthService',
   ['$q', '$timeout', '$http',
   function ($q, $timeout, $http) {
+      var user;
+      // create user variable
 
-    // create user variable
-    var user = null;
-
-    // return available functions for use in the controllers
-    return ({
-      isLoggedIn: function isLoggedIn() {
-        if(user) {
-          return true;
-        } else {
-          return false;
-        }
+      // return available functions for use in the controllers
+      return({isLoggedIn: function isLoggedIn() {
+        return user;
       },
+      
       getUserStatus: function getUserStatus() {
         return $http.get('/user/status')
         // handle success
@@ -29,6 +24,7 @@ angular.module('openstory_server').factory('AuthService',
           user = false;
         });
       },
+      
       login: function login(username, password) {
         // create a new instance of deferred
         var deferred = $q.defer();
@@ -55,6 +51,7 @@ angular.module('openstory_server').factory('AuthService',
         // return promise object
         return deferred.promise;
       },
+
       logout: function logout() {
 
         // create a new instance of deferred
@@ -76,8 +73,8 @@ angular.module('openstory_server').factory('AuthService',
         // return promise object
         return deferred.promise;
 
-      }
-      ,
+      },
+      
       register: function register(username, password) {
         // create a new instance of deferred
         var deferred = $q.defer();
@@ -100,7 +97,70 @@ angular.module('openstory_server').factory('AuthService',
 
         // return promise object
         return deferred.promise;
-      }
-    });
+      }      
+      })}]);
 
-}]);
+
+angular.module('openstory_server').factory('StoryService',
+  ['$q', '$timeout', '$http', '$routeParams',
+  function ($q, $timeout, $http, $routeParams) {
+      // create user variable
+
+      // return available functions for use in the controllers
+      return({
+        write_catalog: function write_catalog(cat) {
+          return $http({url: '/api/write_catalog/' + $routeParams.c1,
+                        method:'PUT',
+                        data: cat,
+                        headers: {'Content-Type': 'application/json;charset=utf-8'}
+                      })
+          // handle success
+          .success(function (data) {
+            
+          })
+        }
+        ,
+        read_catalog: function read_catalog() {
+        //console.log('/read_catalog/' + $routeParams.c1);
+        return $http.get('/api/read_catalog/' + $routeParams.c1)
+
+          .success(function (data) {
+            console.log(data);
+            return data;
+          })
+        
+          // handle error
+          .error(function (data) {
+            console.log('error retrieving catalog');
+          })
+        }
+        ,
+        search_catalogs: function search_catalogs(search, skip, limit){
+          return $http.get('/api/search_catalogs/' + search + '/' + skip + '/' + limit)
+
+          .success(function (data) {
+            console.log(data);
+            return data;
+          })
+        
+          // handle error
+          .error(function (data) {
+            console.log('error retrieving catalog');
+          })
+        }
+        ,
+        search_mycatalogs: function search_mycatalogs(search, skip, limit){
+          return $http.get('/api/search_mycatalogs/' + search + '/' + skip + '/' + limit)
+
+          .success(function (data) {
+            console.log(data);
+            return data;
+          })
+        
+          // handle error
+          .error(function (data) {
+            console.log('error retrieving catalog');
+          })
+        }
+      })
+    }]);

@@ -149,12 +149,13 @@ angular.module('openstory_server').controller('searchCatalogController',
         $scope.$root.$location = $location;
 
         console.log('searchCatalogController');
-        this.infiniteItems = {
+        $scope.infiniteItems = {
           numLoaded_: 0,
           toLoad_: 0,
           // Required.
           getItemAtIndex: function(index) {
             if (index > this.numLoaded_) {
+              console.log('getitematindex');
               this.fetchMoreItems_(index);
               return null;
             }
@@ -164,15 +165,19 @@ angular.module('openstory_server').controller('searchCatalogController',
           // For infinite scroll behavior, we always return a slightly higher
           // number than the previously loaded items.
           getLength: function() {
+            console.log('numLoad');
             return this.numLoaded_ + 5;
           },
           fetchMoreItems_: function(index) {
             // For demo purposes, we simulate loading more items with a timed
             // promise. In real code, this function would likely contain an
             // $http request.
+            console.log('fetchMoreItems');
             if (this.toLoad_ < index) {
               this.toLoad_ += 20;
               $timeout(angular.noop, 300).then(angular.bind(this, function() {
+                console.log('timeout');
+                console.log('fetchitems' + this.numLoaded_ + ' ' + this.toLoad_);
                 this.numLoaded_ = this.toLoad_;
               }));
             }

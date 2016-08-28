@@ -1,6 +1,10 @@
            
 <div ng-controller="searchCatalogController" ng-cloak>
   <md-content layout="column">
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Search</label>
+      <input >
+    </md-input-container>
     <md-virtual-repeat-container id="vertical-container">
       <div md-virtual-repeat="item in infiniteItems" md-on-demand
           class="repeated-item" flex>

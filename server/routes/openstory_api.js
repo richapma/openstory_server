@@ -144,13 +144,11 @@ openstory_router.get('/read_catalog/:c1', function(req, res){
       {
           res.send(err);
       }else
-      {
-        console.log(catalog);
-        if(catalog){
-          res.json(catalog);
-        }else{
-          res.json(''); //temporary should be removed later.
+      {        
+        if(!catalog){          
+          catalog = new Catalog();  
         }
+        res.json(catalog);
       } 
   });
   }else{

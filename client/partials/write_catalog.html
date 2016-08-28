@@ -5,75 +5,91 @@
     <!-- _id: String,
     uidGroup: String,
     fkuidGroup: String, -->
-    <div class="form-group">
+
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Title</label>
-      <input type="text" class="form-control" name="title" ng-model="catalogForm.title" required>
-    </div>
-    <div class="form-group">
+      <input ng-model="catalogForm.title" >
+    </md-input-container>
+
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Description</label>
-      <input type="text" class="form-control" name="description" ng-model="catalogForm.description" required>
-    </div>    
+      <input ng-model="catalogForm.description" >
+    </md-input-container>
+
     <!--
       width: Number,
       height: Number,
       fontSize: Number,
       fkuidGroup_t_catalog_scene_first: String,
     -->
-    <div class="form-group">
-      <label>Youngest Target Age</label>
-      <input type="number" class="form-control" name="AgeFrom" ng-model="catalogForm.AgeFrom" required>
-    </div> 
-  
-    <div class="form-group">
-      <label>Oldest Target Age</label>
-      <input type="number" class="form-control" name="AgeTo" ng-model="catalogForm.AgeTo" required>
-    </div> 
+<label aria-label="blue" aria-controls="blue-slider">Age Range:</label>
+    <md-slider-container>
+      
+      <label aria-label="blue" aria-controls="blue-slider">From</label>
+      <md-slider class="md-primary" flex min="0" max="18" ng-model="catalogForm.AgeFrom" aria-label="blur">
+      </md-slider>
+      <label aria-label="blue" aria-controls="blue-slider">{{catalogForm.AgeFrom}}</label>
+    </md-slider-container>
+
+    <md-slider-container>
+      <label aria-label="blue" aria-controls="blue-slider">To</label>
+      <md-slider class="md-primary" flex min="0" max="18" ng-model="catalogForm.AgeTo" aria-label="blue">
+      </md-slider>
+      <label aria-label="blue" aria-controls="blue-slider">{{catalogForm.AgeTo}}</label>
+    </md-slider-container>
+
     <!--
       fkuidGroup_t_catalog_genre: String
     -->
     <div class="form-group">
-      <label>DownloadLink</label>
+      <label>Download Link:</label>
       <div ng-repeat="downloadLink in catalogForm.DownloadLink track by $index">
-          <input type="text" class="form-control" ng-model="catalogForm.DownloadLink[$index].value" required>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Download Link {{$index}}</label>
+            <input ng-model="catalogForm.DownloadLink[$index].value" >
+          </md-input-container>
       </div>
       
       <a ng-click="catalogForm.DownloadLink.push({value:''})" class="btn btn-default">Add</a>
     </div>   
  
-    <div class="form-group">
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Embed YouTube Link</label>
-      <input type="text" class="form-control" name="YouTubeEmbedUrl" ng-model="catalogForm.YouTubeEmbedUrl" required>
-    </div>   
+      <input ng-model="catalogForm.YouTubeEmbedUrl" name="YouTubeEmbedUrl" >
+    </md-input-container>
 
-    <div class="form-group">
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Image Url 1</label>
-      <input type="text" class="form-control" name="ImageUrl1" ng-model="catalogForm.ImageUrl1" required>
-    </div>  
+      <input ng-model="catalogForm.ImageUrl1" name="ImageUrl1" >
+    </md-input-container>
 
-    <div class="form-group">
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Image Url 2</label>
-      <input type="text" class="form-control" name="ImageUrl2" ng-model="catalogForm.ImageUrl2" required>
-    </div>  
+      <input ng-model="catalogForm.ImageUrl2" name="ImageUrl2" >
+    </md-input-container>
 
-    <div class="form-group">
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Image Url 3</label>
-      <input type="text" class="form-control" name="ImageUrl3" ng-model="catalogForm.ImageUrl3" required>
-    </div>  
+      <input ng-model="catalogForm.ImageUrl3" name="ImageUrl3" >
+    </md-input-container>
 
-    <div class="form-group">
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Image Url 4</label>
-      <input type="text" class="form-control" name="ImageUrl4" ng-model="catalogForm.ImageUrl4" required>
-    </div>  
+      <input ng-model="catalogForm.ImageUrl4" name="ImageUrl4" >
+    </md-input-container>
 
-    <div class="form-group">
+    <md-input-container class="md-block" flex-gt-sm>
       <label>Image Url 5</label>
-      <input type="text" class="form-control" name="ImageUrl5" ng-model="catalogForm.ImageUrl5" required>
-    </div>  
+      <input ng-model="catalogForm.ImageUrl5" name="ImageUrl5" >
+    </md-input-container>
 
     <div class="form-group">
-    <label>Write Permissions</label>
+    <label>Write Permission:</label>
       <div ng-repeat="writePermission in catalogForm.WritePermissions track by $index">
-          <input type="text" class="form-control" ng-model="catalogForm.WritePermissions[$index].value" required>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Download Link {{$index}}</label>
+            <input ng-model="catalogForm.WritePermissions[$index].value" >
+          </md-input-container>      
       </div>
       
       <a ng-click="catalogForm.WritePermissions.push({value:''})" class="btn btn-default">Add</a>

@@ -2,9 +2,6 @@
   <h1>Story</h1>
   <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
   <form class="form" ng-submit="write_catalog()"‌>
-    <!-- _id: String,
-    uidGroup: String,
-    fkuidGroup: String, -->
 
     <md-input-container class="md-block" flex-gt-sm>
       <label>Title</label>
@@ -16,31 +13,25 @@
       <input ng-model="catalogForm.description" >
     </md-input-container>
 
-    <!--
-      width: Number,
-      height: Number,
-      fontSize: Number,
-      fkuidGroup_t_catalog_scene_first: String,
-    -->
-<label aria-label="blue" aria-controls="blue-slider">Age Range:</label>
+    <label aria-label="Range" aria-controls="Range-sliders">Age Range:</label>
     <md-slider-container>
-      
-      <label aria-label="blue" aria-controls="blue-slider">From</label>
-      <md-slider class="md-primary" flex min="0" max="18" ng-model="catalogForm.AgeFrom" aria-label="blur">
+      <label aria-label="from" aria-controls="range-slider">From</label>
+      <!--this slider generates errors when used because there isnt an inputbox with in the md-slider-container-->
+      <!--https://github.com/angular/material/issues/8174-->
+      <md-slider class="md-primary" flex min="0" max="18" ng-model="catalogForm.AgeFrom" aria-label="from">
       </md-slider>
-      <label aria-label="blue" aria-controls="blue-slider">{{catalogForm.AgeFrom}}</label>
+      <label aria-label="from" aria-controls="range-slider">{{catalogForm.AgeFrom}}</label>
     </md-slider-container>
 
     <md-slider-container>
-      <label aria-label="blue" aria-controls="blue-slider">To</label>
-      <md-slider class="md-primary" flex min="0" max="18" ng-model="catalogForm.AgeTo" aria-label="blue">
+      <label aria-label="To" aria-controls="range-slider">To</label>
+      <!--this slider generates errors when used because there isnt an inputbox with in the md-slider-container-->
+      <!--https://github.com/angular/material/issues/8174-->      
+      <md-slider class="md-primary" flex min="0" max="18" ng-model="catalogForm.AgeTo" aria-label="to">
       </md-slider>
-      <label aria-label="blue" aria-controls="blue-slider">{{catalogForm.AgeTo}}</label>
+      <label aria-label="To" aria-controls="range-slider">{{catalogForm.AgeTo}}</label>
     </md-slider-container>
 
-    <!--
-      fkuidGroup_t_catalog_genre: String
-    -->
     <div class="form-group">
       <label>Download Link:</label>
       <div ng-repeat="downloadLink in catalogForm.DownloadLink track by $index">
@@ -94,20 +85,12 @@
       
       <a ng-click="catalogForm.WritePermissions.push({value:''})" class="btn btn-default">Add</a>
     </div>
-    <!-- 
-    Hide: Number,
-    -->
-    <!--
-    ModReview: Number, 
-    FlagInappropriate: Number,  
-    fkuidGroup_t_catalog_update: String,  
-    RecordCurrent: Number, 
-    DateRecordCurrent: Date
-    -->
+
     <div class="form-group">
       <md-checkbox name="Released" ng-model="catalogForm.Released" ng-true-value="1" ng-false-value="0">Publish</md-checkbox>
       <div>
         <button type="submit" class="btn btn-default">Save</button>
       </div>
+    </div>
   </form>
 </div>

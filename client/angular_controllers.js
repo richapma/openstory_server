@@ -166,7 +166,7 @@ angular.module('openstory_server').controller('searchCatalogController',
           // number than the previously loaded items.
           getLength: function() {
             console.log('numLoad');
-            return this.numLoaded_ + 5;
+            return this.numLoaded_ + 24;
           },
           fetchMoreItems_: function(index) {
             // For demo purposes, we simulate loading more items with a timed
@@ -174,11 +174,10 @@ angular.module('openstory_server').controller('searchCatalogController',
             // $http request.
             console.log('fetchMoreItems');
             if (this.toLoad_ < index) {
-              this.toLoad_ += 20;
-              $timeout(angular.noop, 300).then(angular.bind(this, function() {
-                console.log('timeout');
-                console.log('fetchitems' + this.numLoaded_ + ' ' + this.toLoad_);
-                this.numLoaded_ = this.toLoad_;
+              this.toLoad_ += 24;                               
+              $http.get('api/search_catalogs//' + this.numLoaded_ + '/24').then(angular.bind(this, function (obj) {
+                  this.items = this.items.concat(obj.data);
+                  this.numLoaded_ = this.toLoad_;
               }));
             }
           }

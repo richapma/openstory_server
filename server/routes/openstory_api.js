@@ -6,7 +6,15 @@ var Openstory_store = require('../models/openstory_store.js');
 var Catalog = require('../models/catalog.js');
 var uuid = require('uuid');
 
-openstory_router.get('/search_catalogs', function(req, res){
+function _fix_uuid(uuid){
+  if(!uuid){
+    return null;
+  }else{
+    return uuid.replace(/-/g, '').toUpperCase();
+  }
+}
+
+openstory_router.get('/search_catalogs/:search/:skip/:limit', function(req, res){
   console.log('search_catalogs');
   //if(req.isAuthenticated()){
     //req.params.search = req.params.search; //.replace(/-/g,'').toUpperCase();
@@ -17,16 +25,17 @@ openstory_router.get('/search_catalogs', function(req, res){
             res.send(err);
         }else
         {
-          var cats = {};
+          /*
+          var cats = [];
           var key;
           console.log('found catalog(s):' + catalogs.length);
 
           for(var i=0; i<catalogs.length; i++){
-            key = catalogs[i]._id;
+            //key = catalogs[i]._id;
             cats[key] = catalogs[i];
           }
-
-          res.json(cats);
+          */
+          res.json(catalogs);
         }
       }
     );    
@@ -38,7 +47,7 @@ openstory_router.get('/search_catalogs', function(req, res){
   //}
 });
 
-openstory_router.get('/search_mycatalogs', function(req, res){
+openstory_router.get('/search_mycatalogs/:search/:skip/:limit', function(req, res){
   if(req.isAuthenticated()){
     req.params.search = req.params.search; //.replace(/-/g,'').toUpperCase();
     Catalog.find($and [{'title': new RegExp('.*' + req.params.search + '.*', 'i')},
@@ -50,16 +59,17 @@ openstory_router.get('/search_mycatalogs', function(req, res){
             res.send(err);
         }else
         {
-          var cats = {};
+          /*
+          var cats = [];
           var key;
           console.log('found catalog(s):' + catalogs.length);
 
           for(var i=0; i<catalogs.length; i++){
-            key = catalogs[i]._id;
+            //key = catalogs[i]._id;
             cats[key] = catalogs[i];
           }
-
-          res.json(cats);
+          */
+          res.json(catalogs);
         }
       }
     );    
@@ -81,7 +91,7 @@ openstory_router.put('/write_catalog/:c1', function(req, res){
       }
       
       if(req.body._id == null){
-        catalog._id = uuid.v1().replace(/-/g, '').toUpperCase();
+        catalog._id = _fix_uuid(uuid.v1());
       }else{
         catalog._id = req.body._id;
       }
@@ -91,7 +101,7 @@ openstory_router.put('/write_catalog/:c1', function(req, res){
       catalog.width = req.body.width;
       catalog.height = req.body.height;
       catalog.fontSize = req.body.fontSize;
-      catalog.fkuidGroup_t_catalog_scene_first = req.body.fkuidGroup_t_catalog_scene_first.replace(/-/g, '').toUpperCase();
+      catalog.fkuidGroup_t_catalog_scene_first = _fix_uuid(req.body.fkuidGroup_t_catalog_scene_first);
       catalog.DownloadLink  = req.body.DownloadLink;
       catalog.Description  = req.body.Description;
       catalog.YouTubeEmbedUrl = req.body.YouTubeEmbedUrl;
@@ -106,8 +116,8 @@ openstory_router.put('/write_catalog/:c1', function(req, res){
       catalog.AgeFrom  = req.body.AgeFrom;
       catalog.AgeTo = req.body.AgeTo;
       catalog.FlagInappropriate  = req.body.FlagInappropriate;
-      catalog.fkuidGroup_t_catalog_update  = req.body.fkuidGroup_t_catalog_update.replace(/-/g, '').toUpperCase();
-      catalog.fkuidGroup_t_catalog_genre = req.body.fkuidGroup_t_catalog_genre.replace(/-/g, '').toUpperCase();
+      catalog.fkuidGroup_t_catalog_update  = _fix_uuid(req.body.fkuidGroup_t_catalog_update);
+      catalog.fkuidGroup_t_catalog_genre = _fix_uuid(req.body.fkuidGroup_t_catalog_genre);
       catalog.WritePermissions = req.body.WritePermissions;
       catalog.RecordCurrent  = req.body.RecordCurrent;
       catalog.DateRecordCurrent = req.body.DateRecordCurrent;
@@ -147,10 +157,37 @@ openstory_router.get('/read_catalog/:c1', function(req, res){
       {        
         if(!catalog){          
           catalog = new Catalog();  
+          catalog._id = _fix_uuid(uuid.v1());
         }
+
+        catalog.uidGroup = catalog._id;
+        catalog.fkuidGroup = null; //can't remember what this field was used for
+        catalog.title = '';
+        catalog.width = 0;
+        catalog.height = 0;
+        catalog.fontSize = 14;
+        catalog.fkuidGroup_t_catalog_scene_first = null;
+        catalog.DownloadLink  = [{value:''}];
+        catalog.Description  = '';
+        catalog.YouTubeEmbedUrl = '';
+        catalog.ImageUrl1 = '';
+        catalog.ImageUrl2  = '';
+        catalog.ImageUrl3 = '';
+        catalog.ImageUrl4  = '';
+        catalog.ImageUrl5  = '';
+        catalog.Hide  = 0;
+        catalog.Released = 0;
+        catalog.ModReview  = 0;
+        catalog.AgeFrom  = 0;
+        catalog.AgeTo = 0;
+        catalog.FlagInappropriate  = 0;
+        catalog.fkuidGroup_t_catalog_update  = null;
+        catalog.fkuidGroup_t_catalog_genre = null;
+        catalog.WritePermissions = [{value:''}];
+
         res.json(catalog);
       } 
-  });
+    });
   }else{
     console.log('Unauthenticated user attempted to access read_scene');
     res.status(401).json({
@@ -162,7 +199,7 @@ openstory_router.get('/read_catalog/:c1', function(req, res){
 openstory_router.put('/write_scene/:c1/:_id', function(req, res) {
   if(req.isAuthenticated()){
   //***TO DO: Add code to make sure authenticated user [req.user.username] has permissions to update the catalog. 
-  req.params._id = req.params._id.replace(/-/g, '').toUpperCase();
+  req.params._id = _fix_uuid(req.params._id);
   Scene.findById(req.params._id, function(err, scene) {
     if(!scene)
     {
@@ -171,15 +208,15 @@ openstory_router.put('/write_scene/:c1/:_id', function(req, res) {
       if(req.params._id){
         scene._id = req.params._id;
       }else{
-        scene._id = uuid.v1().replace(/-/g, '').toUpperCase();
+        scene._id = _fix_uuid(uuid.v1());
       }
     }else{
       console.log("scene already exists: updating");
     }
 
     scene.uidGroup=scene._id; //req.body.uidGroup.replace(/-/g,'');
-    scene.fkuidGroup_t_catalog=req.body.fkuidGroup_t_catalog.replace(/-/g, '').toUpperCase();
-    scene.title=req.body.title.replace(/-/g, '').toUpperCase();
+    scene.fkuidGroup_t_catalog=_fix_uuid(req.body.fkuidGroup_t_catalog);
+    scene.title=_fix_uuid(req.body.title); //title is really a uuid
     scene.name=req.body.name;
     scene.start_time=req.body.start_time;
     scene.end_time=req.body.end_time;
@@ -198,16 +235,16 @@ openstory_router.put('/write_scene/:c1/:_id', function(req, res) {
           if(scene.images[key] && scene.images[key].hasOwnProperty('fkuidGroup_t_catalog_to_scene'))
           {
             if(scene.images[key].fkuidGroup_t_catalog_to_scene != null && scene.images[key].fkuidGroup_t_catalog_to_scene != ''){
-              scene.images[key].fkuidGroup_t_catalog_to_scene = scene.images[key].fkuidGroup_t_catalog_to_scene.replace(/-/g, '').toUpperCase()
+              scene.images[key].fkuidGroup_t_catalog_to_scene = _fix_uuid(scene.images[key].fkuidGroup_t_catalog_to_scene);
               scene.precache_scenes.push(scene.images[key].fkuidGroup_t_catalog_to_scene);  
             }
           } else{
             scene.images[key].fkuidGroup_t_catalog_to_scene = null;
           }
 
-          scene.images[key].scene_title = scene.images[key].scene_title.replace(/-/g, '').toUpperCase();
-          scene.images[key].fkuidGroup_t_catalog_scene = scene.images[key].fkuidGroup_t_catalog_scene.replace(/-/g, '').toUpperCase();
-          scene.images[key].uidGroup = scene.images[key].uidGroup.replace(/-/g, '').toUpperCase();
+          scene.images[key].scene_title = _fix_uuid(scene.images[key].scene_title);
+          scene.images[key].fkuidGroup_t_catalog_scene = _fix_uuid(scene.images[key].fkuidGroup_t_catalog_scene);
+          scene.images[key].uidGroup = _fix_uuid(scene.images[key].uidGroup);
         }
     }
     
@@ -237,7 +274,7 @@ openstory_router.put('/write_scene/:c1/:_id', function(req, res) {
 
 openstory_router.get('/read_scene/:c1/:_id', function(req, res) { 
   if(req.isAuthenticated()){
-    req.params._id = req.params._id.replace(/-/g, '').toUpperCase();
+    req.params._id = _fix_uuid(req.params._id);
     console.log("trying to return scene:" + req.params._id);
     Scene.findById(req.params._id, function(err, scene) {
       if (err)
@@ -365,7 +402,7 @@ openstory_router.get('/unique_titles/:c1/:_id/:title', function(req, res) {
   //_id required to exclude the images[_id].title from the comparison.
   if(req.isAuthenticated()){
     req.params.c1 = req.params.c1.replace(/-/,'').toUpperCase();   
-        res.json(get_unique_title(req.params.c1, req.params._id.replace(/-/g, '').toUpperCase(), req.params.title));
+        res.json(get_unique_title(req.params.c1, _fix_uuid(req.params._id), req.params.title));
   }else{
     console.log('Unauthenticated user attempted to access read_scenes');
     res.status(401).json({
@@ -376,8 +413,8 @@ openstory_router.get('/unique_titles/:c1/:_id/:title', function(req, res) {
 
 openstory_router.get('/delete_scene/:c1/:_id', function(req, res) { 
   if(req.isAuthenticated()){
-    req.params.c1 = req.params.c1.replace(/-/g, '').toUpperCase();
-    req.params._id = req.params._id.replace(/-/g, '').toUpperCase();
+    req.params.c1 = _fix_uuid(req.params.c1);
+    req.params._id = _fix_uuid(req.params._id);
 
     Scene.findOneAndRemove({_id : req.params.id, fkuidGroup_t_catalog: req.params.c1}, function(err) {
       if (err)
@@ -396,7 +433,7 @@ openstory_router.get('/delete_scene/:c1/:_id', function(req, res) {
 
 openstory_router.get('/read_first_scene/:c1', function(req, res) { 
   if(req.isAuthenticated()){
-    req.params.c1 = req.params.c1.replace(/-/g, '').toUpperCase();
+    req.params.c1 = _fix_uuid(req.params.c1);
 
     Catalog.findById(req.params.c1, function(err, catalog) {
       if (err)
@@ -406,7 +443,7 @@ openstory_router.get('/read_first_scene/:c1', function(req, res) {
       {
         console.log(catalog);
         if(catalog){
-          res.json(catalog.fkuidGroup_t_catalog_scene_first.replace(/-/g, '').toUpperCase());
+          res.json(_fix_uuid(catalog.fkuidGroup_t_catalog_scene_first));
         }else{
           res.json(''); //temporary should be removed later.
         }
@@ -422,8 +459,8 @@ openstory_router.get('/read_first_scene/:c1', function(req, res) {
 
 openstory_router.put('/write_first_scene/:c1/:_id', function(req, res) { 
   if(req.isAuthenticated()){
-    req.params.c1 = req.params.c1.replace(/-/g, '').toUpperCase();
-    req.params._id = req.params._id.replace(/-/g, '').toUpperCase();
+    req.params.c1 = _fix_uuid(req.params.c1);
+    req.params._id = _fix_uuid(req.params._id);
     console.log("trying to return first scene:" + req.params._id);
     Catalog.findById(req.params.c1, function(err, catalog) {
       if (err)

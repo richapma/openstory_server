@@ -69,7 +69,17 @@ openstory_router.get('/search_mycatalogs/:search/:skip/:limit', function(req, re
             cats[key] = catalogs[i];
           }
           */
-          res.json(catalogs);
+          var i
+          var j
+          var ret_arr = []
+          var chunk_size = 3;
+
+          for (i=0, j=catalogs.length; i<j; i+=chunk_size) {
+              ret_arr.append(catalogs.slice(i,i+chunk_size));
+              // do whatever
+          }
+
+          res.json(ret_arr);
         }
       }
     );    

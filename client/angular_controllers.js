@@ -107,6 +107,7 @@ angular.module('openstory_server').controller('catalogController',
 
         // handle success
         .then(function () {
+          //$location.path('/write_catalog/' + $scope.catalogForm._id);
           //$location.path('/write_story');
           //$scope.disabled = false;
           //$scope.saveStoryForm = {};
@@ -125,8 +126,14 @@ angular.module('openstory_server').controller('catalogController',
       StoryService.read_catalog()
       // handle success
       .then(function(data) {
-            $scope.catalogForm = data.data; 
-            console.log($scope.catalogForm);
+            var pathparts = $location.path().split('/');
+            if(pathparts[pathparts.length-1] == 'NEW'){
+              //change location to the new id.
+              $location.path('/write_catalog/' + data.data._id);  
+            }else{
+              $scope.catalogForm = data.data; 
+              console.log($scope.catalogForm);
+            }
         })
       // handle error
       .catch(function () {
@@ -175,7 +182,7 @@ angular.module('openstory_server').controller('searchCatalogController',
             console.log('fetchMoreItems');
             if (this.toLoad_ < index) {
               this.toLoad_ += 24;                               
-              $http.get('api/search_catalogs//' + this.numLoaded_ + '/24').then(angular.bind(this, function (obj) {
+              $http.get('api/search_catalogs/' + this.numLoaded_ + '/24/.*').then(angular.bind(this, function (obj) {
                   this.items = this.items.concat(obj.data);
                   this.numLoaded_ = this.toLoad_;
               }));

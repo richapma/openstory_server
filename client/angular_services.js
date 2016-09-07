@@ -137,7 +137,7 @@ angular.module('openstory_server').factory('StoryService',
         ,
         search_catalogs: function search_catalogs(search, skip, limit){
           console.log('search_catalogs');
-          return $http.get('/api/search_catalogs/' + search + '/' + skip + '/' + limit)
+          return $http.get('/api/search_catalogs/' + skip + '/' + limit + '/' + search)
 
           .success(function (data) {
             console.log(data);
@@ -151,7 +151,7 @@ angular.module('openstory_server').factory('StoryService',
         }
         ,
         search_mycatalogs: function search_mycatalogs(search, skip, limit){
-          return $http.get('/api/search_mycatalogs/' + search + '/' + skip + '/' + limit)
+          return $http.get('/api/search_mycatalogs/' + skip + '/' + limit + '/' + search)
 
           .success(function (data) {
             console.log(data);

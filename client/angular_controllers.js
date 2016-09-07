@@ -151,8 +151,8 @@ angular.module('openstory_server').controller('catalogController',
 }]);
 
 angular.module('openstory_server').controller('searchCatalogController',
-       ['$scope', '$filter', '$timeout', '$mdSidenav', '$location', 'AuthService', '$log', 
-       function ($scope, $filter, $timeout, $mdSidenav, $location, AuthService, $log) {     
+       ['$scope', '$filter', '$http', '$mdSidenav', '$location', 'AuthService', '$log', 
+       function ($scope, $filter, $http, $mdSidenav, $location, AuthService, $log) {     
         $scope.$root.$location = $location;
 
         console.log('searchCatalogController');
@@ -173,7 +173,7 @@ angular.module('openstory_server').controller('searchCatalogController',
           // number than the previously loaded items.
           getLength: function() {
             console.log('numLoad');
-            return this.numLoaded_ + 24;
+            return this.numLoaded_ + 8; // 8=24/3
           },
           fetchMoreItems_: function(index) {
             // For demo purposes, we simulate loading more items with a timed
@@ -181,10 +181,22 @@ angular.module('openstory_server').controller('searchCatalogController',
             // $http request.
             console.log('fetchMoreItems');
             if (this.toLoad_ < index) {
-              this.toLoad_ += 24;                               
-              $http.get('api/search_catalogs/' + this.numLoaded_ + '/24/.*').then(angular.bind(this, function (obj) {
-                  this.items = this.items.concat(obj.data);
-                  this.numLoaded_ = this.toLoad_;
+              this.toLoad_ += 8; // 8=24/3                              
+              $http.get('/api/search_catalogs/' + (this.numLoaded_*3) + '/24/hello').then(angular.bind(this, function (obj) {
+                  
+                  if(!this.items){
+                    this.items = [];
+                  }
+                  console.log(this.items);
+                  console.log(obj.data);
+                  console.log(obj.data.length);
+                  if(obj.data.length > 0){
+                    this.items = this.items.concat(obj.data);
+                    this.numLoaded_ = this.toLoad_;
+                  }else{
+                    this.toLoad -= 8;
+                  }
+                  
               }));
             }
           }

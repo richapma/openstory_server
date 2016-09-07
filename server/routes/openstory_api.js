@@ -25,13 +25,14 @@ function _check_write_permission(WritePermissionsArray, uname){
 }
 
 openstory_router.get('/search_catalogs/:skip/:limit/:search', function(req, res){
-  console.log('search_catalogs');
   //if(req.isAuthenticated()){
     //req.params.search = req.params.search; //.replace(/-/g,'').toUpperCase();
-    Catalog.find({'title': new RegExp('.*' + req.params.search + '.*', 'i')}, { skip: req.params.skip, limit: req.params.limit }, 
+    console.log('search_catalogs');
+    Catalog.find({'title': new RegExp('.*', 'i')}, 'title Description', { skip: parseInt(req.params.skip), limit: parseInt(req.params.limit) },
       function(err, catalogs){
         if (err)
         {
+            console.log(err);
             res.send(err);
         }else
         {
@@ -45,19 +46,36 @@ openstory_router.get('/search_catalogs/:skip/:limit/:search', function(req, res)
             cats[key] = catalogs[i];
           }
           */
-          res.json(catalogs);
+          var i;
+          var j;
+          var ret_arr = [];
+          var chunk_size = 3;
+
+          
+          console.log(catalogs.length);
+          console.log(catalogs);
+          if(catalogs.length > 0){
+            for (i=0, j=catalogs.length; i<j; i+=chunk_size) {
+                ret_arr.push(catalogs.slice(i,i+chunk_size));
+                // do whatever
+            }
+          }
+          console.log(ret_arr);
+
+          res.json(ret_arr);
         }
       }
     );    
-  //}else{
+  /*}else{
     console.log('Unauthenticated user attempted to access search_catalogs');
     res.status(401).json({
       status: true
     });
-  //}
+  }*/
 });
 
 openstory_router.get('/search_mycatalogs/:skip/:limit/:search', function(req, res){
+  console.log('search_mycatalogs');
   if(req.isAuthenticated()){
     req.params.search = req.params.search; //.replace(/-/g,'').toUpperCase();
     Catalog.find($and [{'title': new RegExp('.*' + req.params.search + '.*', 'i')},
@@ -79,13 +97,13 @@ openstory_router.get('/search_mycatalogs/:skip/:limit/:search', function(req, re
             cats[key] = catalogs[i];
           }
           */
-          var i
-          var j
-          var ret_arr = []
+          var i;
+          var j;
+          var ret_arr = [];
           var chunk_size = 3;
 
           for (i=0, j=catalogs.length; i<j; i+=chunk_size) {
-              ret_arr.append(catalogs.slice(i,i+chunk_size));
+              ret_arr.push(catalogs.slice(i,i+chunk_size));
               // do whatever
           }
 

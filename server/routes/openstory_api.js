@@ -50,16 +50,16 @@ openstory_router.get('/search_catalogs/:skip/:limit/:search', function(req, res)
           var j;
           var ret_arr = [];
           var chunk_size = 3;
-
           
           console.log(catalogs.length);
           console.log(catalogs);
           if(catalogs.length > 0){
             for (i=0, j=catalogs.length; i<j; i+=chunk_size) {
-                ret_arr.push(catalogs.slice(i,i+chunk_size));
+                ret_arr.push({col: catalogs.slice(i,i+chunk_size)});
                 // do whatever
             }
           }
+          //ret_obj.rows = ret_arr;
           console.log(ret_arr);
 
           res.json(ret_arr);

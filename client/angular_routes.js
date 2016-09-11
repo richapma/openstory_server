@@ -25,7 +25,7 @@ myApp.config(function ($routeProvider) {
       controller: 'catalogController',
       access: {restricted: true}
     })
-    .when('/search_catalogs/:skip/:limit/:search', {
+    .when('/search_catalogs/:skip/:limit', {
       templateUrl: 'partials/search_catalogs.html',
       controller: 'searchCatalogController',
       access: {restricted: false}

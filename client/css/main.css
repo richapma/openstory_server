@@ -20,20 +20,33 @@
     -webkit-justify-content:center;
 
     display:flex;
+    flex-flow: row wrap;
     justify-content:center;
+}
 
+@media all and (max-width: 500px) {
+    .os-wrapper{
+        display:-webkit-flex;
+        -webkit-justify-content:center;
+
+        display:flex;
+        flex-flow: column wrap;
+        justify-content:center;
+    }
 }
 
 .os-wrapper div{
-    -webkit-flex:1;
-    flex:1;
+    /*-webkit-flex:1;
+    flex:1;*/
+    display:inline-block;
     margin: 3px 3px 3px 3px;
+    min-width:150px;
 }
 
 
 .md-virtual-repeat-container {
     position: relative;
-    display: block;
+    display: inline-block;
     width: 100%;
     height: 100vh;
     /*border: solid 1px #ccc;*/
@@ -41,8 +54,8 @@
 }
 
 .thumbnail {
-  display: inline-block;
-  display: block;
+  display: inline-flex;
+  min-width:200px;
   height: auto;
   max-width: 100%;
   padding: 4px;

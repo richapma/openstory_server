@@ -26,9 +26,9 @@ function _check_write_permission(WritePermissionsArray, uname){
 
 openstory_router.get('/search_catalogs/:skip/:limit/:search', function(req, res){
   //if(req.isAuthenticated()){
-    //req.params.search = req.params.search; //.replace(/-/g,'').toUpperCase();
+    req.params.search = req.params.search.replace(/~/g,'.*');
     console.log('search_catalogs');
-    Catalog.find({'title': new RegExp('.*', 'i')}, 'title Description', { skip: parseInt(req.params.skip), limit: parseInt(req.params.limit) },
+    Catalog.find({'title': new RegExp(req.params.search, 'i')}, 'title Description', { skip: parseInt(req.params.skip), limit: parseInt(req.params.limit) },
       function(err, catalogs){
         if (err)
         {

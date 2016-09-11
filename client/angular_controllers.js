@@ -183,7 +183,12 @@ angular.module('openstory_server').controller('searchCatalogController',
             console.log('fetchMoreItems');
             if (this.toLoad_ < index) {
               this.toLoad_ += 8; // 8=24/3                              
-              $http.get('/api/search_catalogs/' + (this.numLoaded_*3) + '/24/hello').then(angular.bind(this, function (obj) {
+              var cleanKeywords = $scope.searchForm.keywords.replace(' ', '~');
+              if(cleanKeywords.length < 1){
+                cleanKeywords = '~'
+              }
+              console.log('keywords' + cleanKeywords);
+              $http.get('/api/search_catalogs/' + (this.numLoaded_*3) + '/24/' + cleanKeywords).then(angular.bind(this, function (obj) {
                   
                   /*if(!this.items){
                     this.items = [];
@@ -202,6 +207,21 @@ angular.module('openstory_server').controller('searchCatalogController',
             }
           }
         }
+
+        $scope.searchUpdate = function(){
+           console.log('searchUpdate');
+           $scope.infiniteItems.numLoaded_ = 0;
+           $scope.infiniteItems.toLoad_= 0;
+           $scope.infiniteItems.items = [];
+           $scope.topIndex=0;
+        }
+
+        function init(){
+          console.log('search init');
+          $scope.searchForm = {};
+          $scope.searchForm.keywords = ''; 
+        }
+        init();
       }]);
 
 angular.module('openstory_server').directive('header', function () {

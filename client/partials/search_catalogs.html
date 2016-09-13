@@ -11,7 +11,9 @@
       <div md-virtual-repeat="item in infiniteItems" md-on-demand
           class="repeated-item" flex>
           <div class="os-wrapper">
-            <div class="thumbnail">
+            <div class="thumbnail_empty" ng-show="!item.col[0].title">             
+            </div>
+            <div class="thumbnail" ng-show="item.col[0].title.length > 0">
                 <img src="/images/map_castle.jpg" width="100%" alt="...">
                 <div class="caption">
                     <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2FAdventureMashup.com%2Fstory_detail.aspx%3Fcat%3D&amp;width&amp;layout=box_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:65px; width:60px;display:inline-block;" allowTransparency="true"></iframe>
@@ -22,9 +24,11 @@
                       <a ng-click="" class="btn btn-default">More</a>
                       <a ng-click="" class="btn btn-default">Download</a>
                     </p>
-                </div>
+                </div>               
             </div>
-            <div class="thumbnail">
+            <div class="thumbnail_empty" ng-show="!item.col[1].title">
+            </div>
+            <div class="thumbnail" ng-show="item.col[1].title.length > 0">
                 <img src="/images/map_castle.jpg" width="100%" alt="...">
                 <div class="caption">
                     <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2FAdventureMashup.com%2Fstory_detail.aspx%3Fcat%3D&amp;width&amp;layout=box_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:65px; width:60px;display:inline-block;" allowTransparency="true"></iframe>
@@ -35,9 +39,11 @@
                       <a ng-click="" class="btn btn-default">More</a>
                       <a ng-click="" class="btn btn-default">Download</a>
                     </p>
-                </div>
+                </div>              
             </div>
-            <div class="thumbnail">
+            <div class="thumbnail_empty" ng-show="!item.col[2].title">
+            </div>            
+            <div class="thumbnail" ng-show="item.col[2].title.length > 0">
                 <img src="/images/map_castle.jpg" width="100%" alt="...">
                 <div class="caption">
                     <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2FAdventureMashup.com%2Fstory_detail.aspx%3Fcat%3D&amp;width&amp;layout=box_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=65" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:65px; width:60px;display:inline-block;" allowTransparency="true"></iframe>

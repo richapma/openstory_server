@@ -163,7 +163,7 @@ angular.module('openstory_server').controller('searchCatalogController',
           // Required.
           getItemAtIndex: function(index) {
             if (index > this.numLoaded_) {
-              console.log('getitematindex');
+              console.log('getitematindex'+index);
               this.fetchMoreItems_(index);
               return null;
             }

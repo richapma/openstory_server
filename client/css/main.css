@@ -33,13 +33,75 @@
     justify-content:center;
 }
 
-@media all and (max-width: 600px) {
+.thumbnail {
+  align-content: top;
+  /*display: inline-block;*/
+  flex: 1;  
+  width: 32%;
+  height: 60vw;
+  /*max-width: 32%;*/
+  padding: 4px;
+  line-height: 1.428571429;
+  /*background-color: #ffffff;*/
+  background-color: #FFF8E0;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+}
+
+.thumbnail_empty {
+  /*display: inline-block;*/
+  flex: 1;
+  width: 32%;
+  height: 60vw;
+  /*max-width: 32%;*/
+  padding: 4px;
+  line-height: 1.428571429;
+  /*background-color: #ffffff;*/
+  /*background-color: #FFF8E0;
+  border: 1px solid #dddddd;*/
+  border-radius: 4px;
+  -webkit-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+}
+
+@media all and (max-width: 650px) {
     .os-wrapper{
         display:-webkit-flex;
 
         display:flex;    
         justify-content:center;
         flex-direction: column;
+    }
+
+    .thumbnail {
+         /*display: inline-block;*/
+        flex: 1;
+        width: 96%;
+        height: 120vw;        
+        padding: 4px;
+        line-height: 1.428571429;
+        /*background-color: #ffffff;*/
+        background-color: #FFF8E0;
+        border: 1px solid #dddddd;
+        border-radius: 4px;
+        -webkit-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
+    }
+
+    .thumbnail_empty {
+        display: inline-block;
+        width: 96%;
+        height: 120vw;        
+        padding: 4px;
+        line-height: 1.428571429;
+        /*background-color: #ffffff;*/
+        /*background-color: #FFF8E0;
+        border: 1px solid #dddddd;*/
+        border-radius: 4px;
+        -webkit-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
     }
 }
 
@@ -49,20 +111,6 @@
     
     margin: 3px 3px 3px 3px;
    
-}
-
-.thumbnail {
-  display: inline-block;
-  height: auto;
-  max-width: 100%;
-  padding: 4px;
-  line-height: 1.428571429;
-  /*background-color: #ffffff;*/
-  background-color: #FFF8E0;
-  border: 1px solid #dddddd;
-  border-radius: 4px;
-  -webkit-transition: all 0.2s ease-in-out;
-          transition: all 0.2s ease-in-out;
 }
 
 .thumbnail > img {

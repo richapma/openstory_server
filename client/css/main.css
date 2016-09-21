@@ -1,3 +1,7 @@
+body {
+    font-size:2vw;
+}
+
 .maintain-aspect16by9 
 {
     margin-top:25px;
@@ -34,6 +38,7 @@
 }
 
 .thumbnail {
+  position:relative;
   align-content: top;
   /*display: inline-block;*/
   flex: 1;  
@@ -66,7 +71,44 @@
           transition: all 0.2s ease-in-out;
 }
 
+.os-wrapper div{
+    /*-webkit-flex:1;
+    flex:1;*/
+    
+    margin: 3px 3px 3px 3px;
+   
+}
+
+.thumbnail > img {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.thumbnail .caption {
+  float:left;
+  padding: 9px;
+  color: #333333;
+}
+
+.md-sidenav-left {
+    height: 100%;
+} 
+
+.button_section{
+    float:right;    
+}
+
+h3 {
+    margin-top:0px;
+    font-size:2vw;
+    font-weight: 0.1vw;
+}
+
 @media all and (max-width: 650px) {
+    body{
+        font-size:2vw;
+    }
+    
     .os-wrapper{
         display:-webkit-flex;
 
@@ -103,26 +145,9 @@
         -webkit-transition: all 0.2s ease-in-out;
                 transition: all 0.2s ease-in-out;
     }
-}
 
-.os-wrapper div{
-    /*-webkit-flex:1;
-    flex:1;*/
-    
-    margin: 3px 3px 3px 3px;
-   
+    h3 {
+        margin-top:0px;
+        font-size:2vw;
+    }
 }
-
-.thumbnail > img {
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.thumbnail .caption {
-  padding: 9px;
-  color: #333333;
-}
-
-.md-sidenav-left {
-    height: 100%;
-} 
